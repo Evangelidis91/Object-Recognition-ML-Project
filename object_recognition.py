@@ -31,9 +31,9 @@ except ImportError:
 
 
 # --- Constants Definition ---
-IMAGE_SIZE = (250, 250)  # Adjusted image size for the model input
+IMAGE_SIZE = (300, 300)  # Adjusted image size for the model input
 BATCH_SIZE = 32  # Number of samples processed in each training iteration.
-EPOCHS = 100  # Maximum number of times to iterate over the entire training dataset.
+EPOCHS = 200  # Maximum number of times to iterate over the entire training dataset.
 CLASSES = ['Man', 'Car', 'Wheel', 'Woman', 'Tree']  # List of specific object classes to detect.
 NUM_CLASSES = len(CLASSES)  # The total number of classes based on the CLASSES list.
 
@@ -343,7 +343,7 @@ if __name__ == "__main__":
     DATASET_DIR = "/Users/konstantinosevangelidis/fiftyone/open-images-v7"
     TEST_IMAGE_PATH = "/Users/konstantinosevangelidis/fiftyone/open-images-v7/train/data/00a0e0767835954f.jpg"
     MAX_SAMPLES = 10000  # Adjust number of samples to load per split
-    MODEL_SAVE_PATH = "multilabel_cnn_tfdata_7_4.keras"
+    MODEL_SAVE_PATH = "multilabel_cnn_tfdata_7_5.keras"
     # --- End Configuration ---
 
     # --- Basic Checks ---
@@ -483,9 +483,9 @@ if __name__ == "__main__":
     # Predict on a single image
     if os.path.exists(TEST_IMAGE_PATH):
         detections = predict_multiple_classes(model, TEST_IMAGE_PATH, CLASSES, threshold=0.5)
-        # print("\nDetected Classes in Test Image:")
-        # for det in detections:
-        #     print(f"- {det['class']} ({det['confidence']:.2f})")
+        print("\nDetected Classes in Test Image:")
+        for det in detections:
+            print(f"- {det['class']} ({det['confidence']:.2f})")
     else:
         print(f"\nTest image not found, skipping prediction: {TEST_IMAGE_PATH}")
 
