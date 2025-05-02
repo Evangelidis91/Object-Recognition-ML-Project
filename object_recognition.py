@@ -359,13 +359,35 @@ if __name__ == "__main__":
         # Create the dataset tool object
         dataset_prep = OpenImagesDatasetPreparation(DATASET_DIR, CLASSES)
         datasets = dataset_prep.download_dataset(max_samples=MAX_SAMPLES)
-        print("******************************************************************")
-        dataset_prep.analyze_dataset(datasets)
-        print("******************************************************************")
         if not datasets: raise ValueError("Dataset loading/download failed.")
     except Exception as e:
         print(f"Error initializing dataset: {e}");
         exit()
+
+    # --- >>> NEW: Analyze Datasets <<< ---
+    # Check if the dataset_prep object actually has the 'analyze_dataset' method
+    # This prevents errors if you are running with the placeholder class definition
+    if hasattr(dataset_prep, 'analyze_dataset'):
+        print("\n--- Starting Dataset Analysis (if available) ---")
+        # Iterate through the splits returned (e.g., 'train', 'validation', 'test')
+        for split_name, fiftyone_dataset_split in datasets.items():
+            if fiftyone_dataset_split is not None:
+                print(f"\n--- Analyzing the '{split_name}' split ---")
+                try:
+                    # Call the analyze_dataset method on the dataset_prep object,
+                    # passing the specific FiftyOne dataset split object
+                    dataset_prep.analyze_dataset(fiftyone_dataset_split)
+                    print(f"--- Finished analyzing '{split_name}' split ---")
+                except Exception as e:
+                    print(f"Error during analysis of '{split_name}' split: {e}")
+                    # import traceback
+                    # print(traceback.format_exc())
+            else:
+                print(f"\nSkipping analysis for '{split_name}' split because it is None.")
+        print("\n--- Dataset Analysis Finished ---")
+    else:
+        print("\nSkipping dataset analysis: 'analyze_dataset' method not found (possibly using placeholder).")
+    # --- >>> End of New Analysis Section <<< ---
 
     # --- Get Picture Paths and Labels ---
     # Extract filepaths and multi-hot labels

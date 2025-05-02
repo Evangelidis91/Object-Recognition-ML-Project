@@ -70,21 +70,25 @@ class OpenImagesDatasetPreparation:
             samples_without_detections = len(dataset) - samples_with_detections
             print(f"  Samples without detections: {samples_without_detections}")
 
-            # Print all unique labels found in the dataset:
-            unique_labels = set(class_counts.keys())
-            print("\nUnique labels found in the dataset:")
-            for label in unique_labels:
-                print(f"    - {label}")
+            # # Print all unique labels found in the dataset:
+            # unique_labels = set(class_counts.keys())
+            # print("\nUnique labels found in the dataset:")
+            # for label in unique_labels:
+            #     print(f"    - {label}")
 
             if class_counts:
+
+                sorted_class_items = sorted(class_counts.items(), key=lambda item: item[1], reverse=True)
+                top_n_items = 10
+
                 print("\nClass Distribution (Number of Detections per Class):")
-                for label, count in class_counts.items():
+                for label, count in sorted_class_items[:top_n_items]:
                     print(f"    {label}: {count}")
 
                 # Calculate class distribution percentages
                 total_detections = sum(class_counts.values())
                 print("\nClass Distribution (Percentage of Detections per Class):")
-                for label, count in class_counts.items():
+                for label, count in sorted_class_items[:top_n_items]:
                     percentage = (count / total_detections) * 100
                     print(f"    {label}: {percentage:.2f}%")
 
