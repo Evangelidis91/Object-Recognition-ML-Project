@@ -34,7 +34,7 @@ except ImportError:
 IMAGE_SIZE = (300, 300)  # Adjusted image size for the model input
 BATCH_SIZE = 32  # Number of samples processed in each training iteration.
 EPOCHS = 200  # Maximum number of times to iterate over the entire training dataset.
-CLASSES = ['Man', 'Car', 'Wheel', 'Woman', 'Tree']  # List of specific object classes to detect.
+CLASSES = ['Man', 'Car', 'Wheel', 'Woman', 'Tree', 'Clothing', 'Mammal', 'Furniture']  # List of specific object classes to detect.
 NUM_CLASSES = len(CLASSES)  # The total number of classes based on the CLASSES list.
 
 
@@ -343,7 +343,7 @@ if __name__ == "__main__":
     DATASET_DIR = "/Users/konstantinosevangelidis/fiftyone/open-images-v7"
     TEST_IMAGE_PATH = "/Users/konstantinosevangelidis/fiftyone/open-images-v7/train/data/00a0e0767835954f.jpg"
     MAX_SAMPLES = 10000  # Adjust number of samples to load per split
-    MODEL_SAVE_PATH = "multilabel_cnn_tfdata_7_5.keras"
+    MODEL_SAVE_PATH = "multilabel_cnn_tfdata_7_6.keras"
     # --- End Configuration ---
 
     # --- Basic Checks ---
