@@ -79,7 +79,7 @@ class OpenImagesDatasetPreparation:
             if class_counts:
 
                 sorted_class_items = sorted(class_counts.items(), key=lambda item: item[1], reverse=True)
-                top_n_items = 10
+                top_n_items = 15
 
                 print("\nClass Distribution (Number of Detections per Class):")
                 for label, count in sorted_class_items[:top_n_items]:

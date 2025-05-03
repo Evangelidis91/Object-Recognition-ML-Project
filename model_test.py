@@ -71,9 +71,13 @@ def predict_image_multilabel(model_path, image_path, class_names, image_size=(20
         return None
 
 if __name__ == "__main__":
-    MODEL_PATH = "multilabel_cnn_tfdata_7_5.keras"
-    IMAGE_PATH = "/Users/konstantinosevangelidis/fiftyone/open-images-v7/test/data/0aa63e5298ff5224.jpg"
-    CLASSES = ['Man', 'Car', 'Wheel', 'Woman', 'Tree']
+    MODEL_PATH = "multilabel_cnn_tfdata_7_6.keras"
+    IMAGE_PATH = "/Users/konstantinosevangelidis/fiftyone/open-images-v7/test/data/0aecdda329ce4a4f.jpg"
+    # For model <= 7.5
+    #CLASSES = ['Man', 'Car', 'Wheel', 'Woman', 'Tree']
+    # For model >= 7.6
+    CLASSES = ['Man', 'Car', 'Wheel', 'Woman', 'Tree', 'Clothing', 'Mammal', 'Furniture']
+
     IMG_SIZE = (300, 300)
     CONFIDENCE_THRESHOLD = 0.5
 

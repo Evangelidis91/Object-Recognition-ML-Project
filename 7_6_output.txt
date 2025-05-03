@@ -1,0 +1,589 @@
+/opt/homebrew/anaconda3/bin/python /Users/konstantinosevangelidis/PycharmProjects/DAMA61_ObjectRecognition/object_recognition.py
+Successfully imported OpenImagesDatasetPreparation.
+2025-05-02 23:57:24.245741: I metal_plugin/src/device/metal_device.cc:1154] Metal device set to: Apple M3 Pro
+2025-05-02 23:57:24.245761: I metal_plugin/src/device/metal_device.cc:296] systemMemory: 36.00 GB
+2025-05-02 23:57:24.245764: I metal_plugin/src/device/metal_device.cc:313] maxCacheSize: 13.50 GB
+2025-05-02 23:57:24.245777: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:305] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.
+2025-05-02 23:57:24.245787: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:271] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -> physical PluggableDevice (device: 0, name: METAL, pci bus id: <undefined>)
+Starting Open Images V7 download...
+
+Downloading train split...
+Downloading split 'train' to '/Users/konstantinosevangelidis/fiftyone/open-images-v7/train' if necessary
+Necessary images already downloaded
+Existing download of split 'train' is sufficient
+Loading 'open-images-v7' split 'train'
+ 100% |███| 10000/10000 [36.3s elapsed, 0s remaining, 279.1 samples/s]
+Dataset 'open-images-v7-train-10000' created
+
+Downloading validation split...
+Downloading split 'validation' to '/Users/konstantinosevangelidis/fiftyone/open-images-v7/validation' if necessary
+Necessary images already downloaded
+Existing download of split 'validation' is sufficient
+Loading 'open-images-v7' split 'validation'
+ 100% |███| 10000/10000 [42.2s elapsed, 0s remaining, 222.5 samples/s]
+Dataset 'open-images-v7-validation-10000' created
+
+Downloading test split...
+Downloading split 'test' to '/Users/konstantinosevangelidis/fiftyone/open-images-v7/test' if necessary
+Necessary images already downloaded
+Existing download of split 'test' is sufficient
+Loading 'open-images-v7' split 'test'
+ 100% |███| 10000/10000 [43.8s elapsed, 0s remaining, 246.2 samples/s]
+Dataset 'open-images-v7-test-10000' created
+
+Dataset preparation completed successfully!
+
+--- Starting Dataset Analysis (if available) ---
+
+--- Analyzing the 'train' split ---
+
+Dataset Analysis:
+  Number of samples: 10000
+
+Detection Statistics:
+  Samples with detections: 10000
+  Samples without detections: 0
+
+Class Distribution (Number of Detections per Class):
+    Man: 19242
+    Clothing: 16697
+    Human face: 11428
+    Woman: 10895
+    Footwear: 7275
+    Person: 6085
+    Car: 4242
+    Tree: 3408
+    Human hair: 3363
+    Wheel: 3336
+    Human head: 2914
+    Human arm: 2870
+    Mammal: 2457
+    Human body: 2433
+    Girl: 2268
+
+Class Distribution (Percentage of Detections per Class):
+    Man: 14.81%
+    Clothing: 12.85%
+    Human face: 8.79%
+    Woman: 8.38%
+    Footwear: 5.60%
+    Person: 4.68%
+    Car: 3.26%
+    Tree: 2.62%
+    Human hair: 2.59%
+    Wheel: 2.57%
+    Human head: 2.24%
+    Human arm: 2.21%
+    Mammal: 1.89%
+    Human body: 1.87%
+    Girl: 1.75%
+--- Finished analyzing 'train' split ---
+
+--- Analyzing the 'validation' split ---
+
+Dataset Analysis:
+  Number of samples: 10000
+
+Detection Statistics:
+  Samples with detections: 10000
+  Samples without detections: 0
+
+Class Distribution (Number of Detections per Class):
+    Mammal: 12111
+    Clothing: 12090
+    Wheel: 9281
+    Person: 9195
+    Human arm: 7873
+    Human body: 7779
+    Car: 7226
+    Human hair: 6363
+    Man: 6170
+    Footwear: 5988
+    Human head: 5541
+    Sports equipment: 4200
+    Tire: 4100
+    Human leg: 3960
+    Human face: 3614
+
+Class Distribution (Percentage of Detections per Class):
+    Mammal: 8.00%
+    Clothing: 7.99%
+    Wheel: 6.13%
+    Person: 6.08%
+    Human arm: 5.20%
+    Human body: 5.14%
+    Car: 4.77%
+    Human hair: 4.20%
+    Man: 4.08%
+    Footwear: 3.96%
+    Human head: 3.66%
+    Sports equipment: 2.78%
+    Tire: 2.71%
+    Human leg: 2.62%
+    Human face: 2.39%
+--- Finished analyzing 'validation' split ---
+
+--- Analyzing the 'test' split ---
+
+Dataset Analysis:
+  Number of samples: 10000
+
+Detection Statistics:
+  Samples with detections: 10000
+  Samples without detections: 0
+
+Class Distribution (Number of Detections per Class):
+    Clothing: 12813
+    Mammal: 12087
+    Wheel: 9341
+    Person: 9192
+    Human arm: 8203
+    Human body: 7603
+    Car: 7395
+    Man: 6819
+    Human hair: 6750
+    Human head: 6695
+    Footwear: 6029
+    Sports equipment: 4566
+    Human leg: 4470
+    Tire: 4321
+    Human face: 3729
+
+Class Distribution (Percentage of Detections per Class):
+    Clothing: 8.14%
+    Mammal: 7.68%
+    Wheel: 5.93%
+    Person: 5.84%
+    Human arm: 5.21%
+    Human body: 4.83%
+    Car: 4.70%
+    Man: 4.33%
+    Human hair: 4.29%
+    Human head: 4.25%
+    Footwear: 3.83%
+    Sports equipment: 2.90%
+    Human leg: 2.84%
+    Tire: 2.75%
+    Human face: 2.37%
+--- Finished analyzing 'test' split ---
+
+--- Dataset Analysis Finished ---
+
+Extracting file paths and multi-hot labels...
+Extracting from train...
+ 100% |███| 10000/10000 [14.3s elapsed, 0s remaining, 759.1 samples/s]
+Extracted 10000 valid samples from train.
+Extracting from validation...
+ 100% |███| 10000/10000 [16.4s elapsed, 0s remaining, 607.4 samples/s]
+Extracted 10000 valid samples from validation.
+Extracting from test...
+ 100% |███| 10000/10000 [17.2s elapsed, 0s remaining, 669.6 samples/s]
+Extracted 10000 valid samples from test.
+Total extracted samples: 30000
+
+Split Sizes: Train=19200, Val=4800, Test=6000
+
+Creating TensorFlow datasets...
+TensorFlow datasets created.
+
+--- Model Summary ---
+Model: "sequential_1"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ conv2d (Conv2D)                 │ (None, 300, 300, 32)   │           896 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization             │ (None, 300, 300, 32)   │           128 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ activation (Activation)         │ (None, 300, 300, 32)   │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d (MaxPooling2D)    │ (None, 150, 150, 32)   │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv2d_1 (Conv2D)               │ (None, 150, 150, 64)   │        18,496 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization_1           │ (None, 150, 150, 64)   │           256 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ activation_1 (Activation)       │ (None, 150, 150, 64)   │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d_1 (MaxPooling2D)  │ (None, 75, 75, 64)     │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv2d_2 (Conv2D)               │ (None, 75, 75, 128)    │        73,856 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization_2           │ (None, 75, 75, 128)    │           512 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ activation_2 (Activation)       │ (None, 75, 75, 128)    │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d_2 (MaxPooling2D)  │ (None, 37, 37, 128)    │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv2d_3 (Conv2D)               │ (None, 37, 37, 256)    │       295,168 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization_3           │ (None, 37, 37, 256)    │         1,024 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ activation_3 (Activation)       │ (None, 37, 37, 256)    │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d_3 (MaxPooling2D)  │ (None, 18, 18, 256)    │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ global_average_pooling2d        │ (None, 256)            │             0 │
+│ (GlobalAveragePooling2D)        │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense (Dense)                   │ (None, 256)            │        65,792 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization_4           │ (None, 256)            │         1,024 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout (Dropout)               │ (None, 256)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_1 (Dense)                 │ (None, 128)            │        32,896 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization_5           │ (None, 128)            │           512 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout_1 (Dropout)             │ (None, 128)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_2 (Dense)                 │ (None, 8)              │         1,032 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+ Total params: 491,592 (1.88 MB)
+ Trainable params: 489,864 (1.87 MB)
+ Non-trainable params: 1,728 (6.75 KB)
+
+--- Starting Model Training ---
+Epoch 1/200
+2025-05-03 00:01:47.780835: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:117] Plugin optimizer for device_type GPU is enabled.
+600/600 ━━━━━━━━━━━━━━━━━━━━ 212s 345ms/step - accuracy: 0.1999 - auc: 0.5863 - loss: 0.8718 - val_accuracy: 0.2994 - val_auc: 0.7196 - val_loss: 0.6398 - learning_rate: 1.0000e-04
+Epoch 2/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.2839 - auc: 0.6469 - loss: 0.7158 - val_accuracy: 0.3971 - val_auc: 0.7487 - val_loss: 0.5550 - learning_rate: 1.0000e-04
+Epoch 3/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 209s 344ms/step - accuracy: 0.3294 - auc: 0.6707 - loss: 0.6227 - val_accuracy: 0.3348 - val_auc: 0.7634 - val_loss: 0.5371 - learning_rate: 1.0000e-04
+Epoch 4/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 209s 345ms/step - accuracy: 0.3535 - auc: 0.6941 - loss: 0.5637 - val_accuracy: 0.3854 - val_auc: 0.7713 - val_loss: 0.4883 - learning_rate: 1.0000e-04
+Epoch 5/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 209s 344ms/step - accuracy: 0.3724 - auc: 0.7033 - loss: 0.5312 - val_accuracy: 0.3571 - val_auc: 0.7610 - val_loss: 0.5300 - learning_rate: 1.0000e-04
+Epoch 6/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.3779 - auc: 0.7145 - loss: 0.5095 - val_accuracy: 0.4804 - val_auc: 0.7788 - val_loss: 0.4632 - learning_rate: 1.0000e-04
+Epoch 7/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 208s 342ms/step - accuracy: 0.3890 - auc: 0.7280 - loss: 0.4958 - val_accuracy: 0.3450 - val_auc: 0.7829 - val_loss: 0.4584 - learning_rate: 1.0000e-04
+Epoch 8/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 204s 336ms/step - accuracy: 0.3957 - auc: 0.7330 - loss: 0.4861 - val_accuracy: 0.3723 - val_auc: 0.7791 - val_loss: 0.4989 - learning_rate: 1.0000e-04
+Epoch 9/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 204s 336ms/step - accuracy: 0.3967 - auc: 0.7396 - loss: 0.4782 - val_accuracy: 0.4192 - val_auc: 0.7888 - val_loss: 0.4460 - learning_rate: 1.0000e-04
+Epoch 10/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 1161s 2s/step - accuracy: 0.4120 - auc: 0.7522 - loss: 0.4687 - val_accuracy: 0.4575 - val_auc: 0.7908 - val_loss: 0.4620 - learning_rate: 1.0000e-04
+Epoch 11/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 1494s 2s/step - accuracy: 0.4173 - auc: 0.7489 - loss: 0.4633 - val_accuracy: 0.3606 - val_auc: 0.7870 - val_loss: 0.5481 - learning_rate: 1.0000e-04
+Epoch 12/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 1282s 2s/step - accuracy: 0.4169 - auc: 0.7558 - loss: 0.4570 - val_accuracy: 0.4373 - val_auc: 0.7953 - val_loss: 0.4789 - learning_rate: 1.0000e-04
+Epoch 13/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 1167s 2s/step - accuracy: 0.4216 - auc: 0.7654 - loss: 0.4516 - val_accuracy: 0.4096 - val_auc: 0.8021 - val_loss: 0.4462 - learning_rate: 1.0000e-04
+Epoch 14/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 0s 321ms/step - accuracy: 0.4186 - auc: 0.7677 - loss: 0.4496
+Epoch 14: ReduceLROnPlateau reducing learning rate to 1.9999999494757503e-05.
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4186 - auc: 0.7677 - loss: 0.4496 - val_accuracy: 0.2498 - val_auc: 0.7904 - val_loss: 0.5460 - learning_rate: 1.0000e-04
+Epoch 15/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 3123s 5s/step - accuracy: 0.4216 - auc: 0.7698 - loss: 0.4407 - val_accuracy: 0.3790 - val_auc: 0.8077 - val_loss: 0.4249 - learning_rate: 2.0000e-05
+Epoch 16/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 218s 359ms/step - accuracy: 0.4321 - auc: 0.7794 - loss: 0.4365 - val_accuracy: 0.3679 - val_auc: 0.8055 - val_loss: 0.4421 - learning_rate: 2.0000e-05
+Epoch 17/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 311s 503ms/step - accuracy: 0.4278 - auc: 0.7777 - loss: 0.4357 - val_accuracy: 0.3725 - val_auc: 0.8094 - val_loss: 0.4268 - learning_rate: 2.0000e-05
+Epoch 18/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 338s 548ms/step - accuracy: 0.4361 - auc: 0.7756 - loss: 0.4341 - val_accuracy: 0.4062 - val_auc: 0.8104 - val_loss: 0.4206 - learning_rate: 2.0000e-05
+Epoch 19/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 411s 669ms/step - accuracy: 0.4276 - auc: 0.7844 - loss: 0.4317 - val_accuracy: 0.4208 - val_auc: 0.8100 - val_loss: 0.4459 - learning_rate: 2.0000e-05
+Epoch 20/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 401s 662ms/step - accuracy: 0.4305 - auc: 0.7819 - loss: 0.4318 - val_accuracy: 0.4033 - val_auc: 0.8123 - val_loss: 0.4178 - learning_rate: 2.0000e-05
+Epoch 21/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 413s 682ms/step - accuracy: 0.4368 - auc: 0.7887 - loss: 0.4292 - val_accuracy: 0.4090 - val_auc: 0.8132 - val_loss: 0.4164 - learning_rate: 2.0000e-05
+Epoch 22/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 415s 686ms/step - accuracy: 0.4387 - auc: 0.7861 - loss: 0.4277 - val_accuracy: 0.3783 - val_auc: 0.8087 - val_loss: 0.4408 - learning_rate: 2.0000e-05
+Epoch 23/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 420s 695ms/step - accuracy: 0.4357 - auc: 0.7855 - loss: 0.4278 - val_accuracy: 0.4087 - val_auc: 0.8133 - val_loss: 0.4126 - learning_rate: 2.0000e-05
+Epoch 24/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 423s 699ms/step - accuracy: 0.4360 - auc: 0.7876 - loss: 0.4251 - val_accuracy: 0.3827 - val_auc: 0.8126 - val_loss: 0.4157 - learning_rate: 2.0000e-05
+Epoch 25/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 1273s 2s/step - accuracy: 0.4338 - auc: 0.7870 - loss: 0.4262 - val_accuracy: 0.3681 - val_auc: 0.8140 - val_loss: 0.4570 - learning_rate: 2.0000e-05
+Epoch 26/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 1172s 2s/step - accuracy: 0.4304 - auc: 0.7911 - loss: 0.4251 - val_accuracy: 0.4750 - val_auc: 0.8174 - val_loss: 0.4172 - learning_rate: 2.0000e-05
+Epoch 27/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 357s 593ms/step - accuracy: 0.4346 - auc: 0.7903 - loss: 0.4249 - val_accuracy: 0.3731 - val_auc: 0.8126 - val_loss: 0.4444 - learning_rate: 2.0000e-05
+Epoch 28/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 3655s 6s/step - accuracy: 0.4391 - auc: 0.7913 - loss: 0.4226 - val_accuracy: 0.3879 - val_auc: 0.8158 - val_loss: 0.4118 - learning_rate: 2.0000e-05
+Epoch 29/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 1193s 2s/step - accuracy: 0.4352 - auc: 0.7878 - loss: 0.4226 - val_accuracy: 0.4204 - val_auc: 0.8174 - val_loss: 0.4085 - learning_rate: 2.0000e-05
+Epoch 30/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 258s 426ms/step - accuracy: 0.4371 - auc: 0.7954 - loss: 0.4212 - val_accuracy: 0.3871 - val_auc: 0.8181 - val_loss: 0.4126 - learning_rate: 2.0000e-05
+Epoch 31/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 283s 468ms/step - accuracy: 0.4333 - auc: 0.7975 - loss: 0.4213 - val_accuracy: 0.3794 - val_auc: 0.8171 - val_loss: 0.4133 - learning_rate: 2.0000e-05
+Epoch 32/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 339s 550ms/step - accuracy: 0.4418 - auc: 0.7937 - loss: 0.4191 - val_accuracy: 0.4296 - val_auc: 0.8195 - val_loss: 0.4103 - learning_rate: 2.0000e-05
+Epoch 33/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 1395s 2s/step - accuracy: 0.4380 - auc: 0.7965 - loss: 0.4178 - val_accuracy: 0.4354 - val_auc: 0.8182 - val_loss: 0.4139 - learning_rate: 2.0000e-05
+Epoch 34/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 0s 5s/step - accuracy: 0.4406 - auc: 0.7989 - loss: 0.4189
+Epoch 34: ReduceLROnPlateau reducing learning rate to 3.999999898951501e-06.
+600/600 ━━━━━━━━━━━━━━━━━━━━ 3124s 5s/step - accuracy: 0.4406 - auc: 0.7989 - loss: 0.4189 - val_accuracy: 0.4800 - val_auc: 0.8193 - val_loss: 0.4124 - learning_rate: 2.0000e-05
+Epoch 35/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 3122s 5s/step - accuracy: 0.4393 - auc: 0.7999 - loss: 0.4169 - val_accuracy: 0.4477 - val_auc: 0.8220 - val_loss: 0.4026 - learning_rate: 4.0000e-06
+Epoch 36/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 204s 336ms/step - accuracy: 0.4416 - auc: 0.7987 - loss: 0.4169 - val_accuracy: 0.4340 - val_auc: 0.8223 - val_loss: 0.4033 - learning_rate: 4.0000e-06
+Epoch 37/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 207s 341ms/step - accuracy: 0.4468 - auc: 0.7985 - loss: 0.4154 - val_accuracy: 0.4277 - val_auc: 0.8202 - val_loss: 0.4052 - learning_rate: 4.0000e-06
+Epoch 38/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 207s 340ms/step - accuracy: 0.4494 - auc: 0.8030 - loss: 0.4131 - val_accuracy: 0.4521 - val_auc: 0.8214 - val_loss: 0.4020 - learning_rate: 4.0000e-06
+Epoch 39/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 208s 343ms/step - accuracy: 0.4449 - auc: 0.8024 - loss: 0.4129 - val_accuracy: 0.4392 - val_auc: 0.8225 - val_loss: 0.4017 - learning_rate: 4.0000e-06
+Epoch 40/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 208s 343ms/step - accuracy: 0.4387 - auc: 0.7997 - loss: 0.4139 - val_accuracy: 0.4285 - val_auc: 0.8227 - val_loss: 0.4015 - learning_rate: 4.0000e-06
+Epoch 41/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 206s 340ms/step - accuracy: 0.4442 - auc: 0.8033 - loss: 0.4128 - val_accuracy: 0.4412 - val_auc: 0.8228 - val_loss: 0.4015 - learning_rate: 4.0000e-06
+Epoch 42/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 348ms/step - accuracy: 0.4476 - auc: 0.8001 - loss: 0.4141 - val_accuracy: 0.4365 - val_auc: 0.8230 - val_loss: 0.4013 - learning_rate: 4.0000e-06
+Epoch 43/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 348ms/step - accuracy: 0.4427 - auc: 0.8000 - loss: 0.4157 - val_accuracy: 0.4406 - val_auc: 0.8229 - val_loss: 0.4011 - learning_rate: 4.0000e-06
+Epoch 44/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 348ms/step - accuracy: 0.4509 - auc: 0.8029 - loss: 0.4146 - val_accuracy: 0.4613 - val_auc: 0.8228 - val_loss: 0.4025 - learning_rate: 4.0000e-06
+Epoch 45/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 212s 349ms/step - accuracy: 0.4438 - auc: 0.8050 - loss: 0.4132 - val_accuracy: 0.4204 - val_auc: 0.8228 - val_loss: 0.4015 - learning_rate: 4.0000e-06
+Epoch 46/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4461 - auc: 0.8045 - loss: 0.4125 - val_accuracy: 0.4421 - val_auc: 0.8237 - val_loss: 0.4008 - learning_rate: 4.0000e-06
+Epoch 47/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 209s 345ms/step - accuracy: 0.4408 - auc: 0.8039 - loss: 0.4123 - val_accuracy: 0.4512 - val_auc: 0.8228 - val_loss: 0.4029 - learning_rate: 4.0000e-06
+Epoch 48/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 219s 361ms/step - accuracy: 0.4461 - auc: 0.8007 - loss: 0.4126 - val_accuracy: 0.4356 - val_auc: 0.8235 - val_loss: 0.4006 - learning_rate: 4.0000e-06
+Epoch 49/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 219s 361ms/step - accuracy: 0.4497 - auc: 0.8060 - loss: 0.4107 - val_accuracy: 0.4181 - val_auc: 0.8232 - val_loss: 0.4003 - learning_rate: 4.0000e-06
+Epoch 50/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 217s 357ms/step - accuracy: 0.4432 - auc: 0.8009 - loss: 0.4149 - val_accuracy: 0.4460 - val_auc: 0.8237 - val_loss: 0.4002 - learning_rate: 4.0000e-06
+Epoch 51/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 208s 343ms/step - accuracy: 0.4509 - auc: 0.8020 - loss: 0.4116 - val_accuracy: 0.4335 - val_auc: 0.8241 - val_loss: 0.4009 - learning_rate: 4.0000e-06
+Epoch 52/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4495 - auc: 0.8039 - loss: 0.4103 - val_accuracy: 0.4194 - val_auc: 0.8232 - val_loss: 0.4011 - learning_rate: 4.0000e-06
+Epoch 53/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 348ms/step - accuracy: 0.4508 - auc: 0.8068 - loss: 0.4102 - val_accuracy: 0.4454 - val_auc: 0.8228 - val_loss: 0.3996 - learning_rate: 4.0000e-06
+Epoch 54/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4517 - auc: 0.8023 - loss: 0.4108 - val_accuracy: 0.4444 - val_auc: 0.8236 - val_loss: 0.3996 - learning_rate: 4.0000e-06
+Epoch 55/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4481 - auc: 0.8071 - loss: 0.4112 - val_accuracy: 0.4277 - val_auc: 0.8237 - val_loss: 0.3995 - learning_rate: 4.0000e-06
+Epoch 56/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4451 - auc: 0.8076 - loss: 0.4100 - val_accuracy: 0.4467 - val_auc: 0.8235 - val_loss: 0.3993 - learning_rate: 4.0000e-06
+Epoch 57/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4508 - auc: 0.8040 - loss: 0.4116 - val_accuracy: 0.4448 - val_auc: 0.8245 - val_loss: 0.3989 - learning_rate: 4.0000e-06
+Epoch 58/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4513 - auc: 0.8063 - loss: 0.4108 - val_accuracy: 0.4538 - val_auc: 0.8244 - val_loss: 0.4006 - learning_rate: 4.0000e-06
+Epoch 59/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4500 - auc: 0.8060 - loss: 0.4102 - val_accuracy: 0.4400 - val_auc: 0.8242 - val_loss: 0.4006 - learning_rate: 4.0000e-06
+Epoch 60/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4527 - auc: 0.8088 - loss: 0.4088 - val_accuracy: 0.4373 - val_auc: 0.8246 - val_loss: 0.4006 - learning_rate: 4.0000e-06
+Epoch 61/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4450 - auc: 0.8066 - loss: 0.4106 - val_accuracy: 0.4400 - val_auc: 0.8252 - val_loss: 0.3990 - learning_rate: 4.0000e-06
+Epoch 62/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 209s 345ms/step - accuracy: 0.4520 - auc: 0.8068 - loss: 0.4088 - val_accuracy: 0.4504 - val_auc: 0.8253 - val_loss: 0.3986 - learning_rate: 4.0000e-06
+Epoch 63/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 208s 343ms/step - accuracy: 0.4490 - auc: 0.8046 - loss: 0.4090 - val_accuracy: 0.4275 - val_auc: 0.8241 - val_loss: 0.4014 - learning_rate: 4.0000e-06
+Epoch 64/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 208s 343ms/step - accuracy: 0.4483 - auc: 0.8107 - loss: 0.4085 - val_accuracy: 0.4531 - val_auc: 0.8251 - val_loss: 0.3978 - learning_rate: 4.0000e-06
+Epoch 65/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 212s 348ms/step - accuracy: 0.4472 - auc: 0.8053 - loss: 0.4086 - val_accuracy: 0.4471 - val_auc: 0.8247 - val_loss: 0.3994 - learning_rate: 4.0000e-06
+Epoch 66/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4459 - auc: 0.8100 - loss: 0.4073 - val_accuracy: 0.4446 - val_auc: 0.8248 - val_loss: 0.3977 - learning_rate: 4.0000e-06
+Epoch 67/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 209s 344ms/step - accuracy: 0.4520 - auc: 0.8070 - loss: 0.4081 - val_accuracy: 0.4358 - val_auc: 0.8245 - val_loss: 0.3974 - learning_rate: 4.0000e-06
+Epoch 68/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 207s 341ms/step - accuracy: 0.4504 - auc: 0.8076 - loss: 0.4081 - val_accuracy: 0.4681 - val_auc: 0.8248 - val_loss: 0.4021 - learning_rate: 4.0000e-06
+Epoch 69/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 209s 345ms/step - accuracy: 0.4533 - auc: 0.8097 - loss: 0.4094 - val_accuracy: 0.4475 - val_auc: 0.8255 - val_loss: 0.3976 - learning_rate: 4.0000e-06
+Epoch 70/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4488 - auc: 0.8091 - loss: 0.4075 - val_accuracy: 0.4298 - val_auc: 0.8257 - val_loss: 0.3973 - learning_rate: 4.0000e-06
+Epoch 71/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4552 - auc: 0.8105 - loss: 0.4047 - val_accuracy: 0.4294 - val_auc: 0.8253 - val_loss: 0.3973 - learning_rate: 4.0000e-06
+Epoch 72/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4499 - auc: 0.8054 - loss: 0.4097 - val_accuracy: 0.4454 - val_auc: 0.8261 - val_loss: 0.3968 - learning_rate: 4.0000e-06
+Epoch 73/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4508 - auc: 0.8108 - loss: 0.4061 - val_accuracy: 0.4548 - val_auc: 0.8262 - val_loss: 0.3994 - learning_rate: 4.0000e-06
+Epoch 74/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4493 - auc: 0.8096 - loss: 0.4068 - val_accuracy: 0.4769 - val_auc: 0.8263 - val_loss: 0.3966 - learning_rate: 4.0000e-06
+Epoch 75/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4568 - auc: 0.8127 - loss: 0.4055 - val_accuracy: 0.4410 - val_auc: 0.8263 - val_loss: 0.3975 - learning_rate: 4.0000e-06
+Epoch 76/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4498 - auc: 0.8075 - loss: 0.4085 - val_accuracy: 0.4638 - val_auc: 0.8263 - val_loss: 0.3971 - learning_rate: 4.0000e-06
+Epoch 77/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4512 - auc: 0.8071 - loss: 0.4055 - val_accuracy: 0.4448 - val_auc: 0.8250 - val_loss: 0.3976 - learning_rate: 4.0000e-06
+Epoch 78/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4489 - auc: 0.8096 - loss: 0.4065 - val_accuracy: 0.4906 - val_auc: 0.8262 - val_loss: 0.3996 - learning_rate: 4.0000e-06
+Epoch 79/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 0s 329ms/step - accuracy: 0.4521 - auc: 0.8121 - loss: 0.4044
+Epoch 79: ReduceLROnPlateau reducing learning rate to 1e-06.
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4521 - auc: 0.8121 - loss: 0.4044 - val_accuracy: 0.4729 - val_auc: 0.8255 - val_loss: 0.4010 - learning_rate: 4.0000e-06
+Epoch 80/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4585 - auc: 0.8117 - loss: 0.4059 - val_accuracy: 0.4504 - val_auc: 0.8265 - val_loss: 0.3951 - learning_rate: 1.0000e-06
+Epoch 81/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4543 - auc: 0.8094 - loss: 0.4047 - val_accuracy: 0.4527 - val_auc: 0.8269 - val_loss: 0.3951 - learning_rate: 1.0000e-06
+Epoch 82/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4562 - auc: 0.8091 - loss: 0.4053 - val_accuracy: 0.4512 - val_auc: 0.8267 - val_loss: 0.3949 - learning_rate: 1.0000e-06
+Epoch 83/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4550 - auc: 0.8144 - loss: 0.4031 - val_accuracy: 0.4473 - val_auc: 0.8274 - val_loss: 0.3950 - learning_rate: 1.0000e-06
+Epoch 84/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4539 - auc: 0.8103 - loss: 0.4058 - val_accuracy: 0.4598 - val_auc: 0.8270 - val_loss: 0.3949 - learning_rate: 1.0000e-06
+Epoch 85/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 206s 340ms/step - accuracy: 0.4545 - auc: 0.8106 - loss: 0.4055 - val_accuracy: 0.4469 - val_auc: 0.8273 - val_loss: 0.3949 - learning_rate: 1.0000e-06
+Epoch 86/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 206s 340ms/step - accuracy: 0.4573 - auc: 0.8119 - loss: 0.4055 - val_accuracy: 0.4442 - val_auc: 0.8268 - val_loss: 0.3949 - learning_rate: 1.0000e-06
+Epoch 87/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 207s 340ms/step - accuracy: 0.4532 - auc: 0.8098 - loss: 0.4044 - val_accuracy: 0.4487 - val_auc: 0.8274 - val_loss: 0.3948 - learning_rate: 1.0000e-06
+Epoch 88/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 206s 340ms/step - accuracy: 0.4569 - auc: 0.8109 - loss: 0.4046 - val_accuracy: 0.4590 - val_auc: 0.8271 - val_loss: 0.3951 - learning_rate: 1.0000e-06
+Epoch 89/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 208s 343ms/step - accuracy: 0.4568 - auc: 0.8090 - loss: 0.4048 - val_accuracy: 0.4494 - val_auc: 0.8269 - val_loss: 0.3948 - learning_rate: 1.0000e-06
+Epoch 90/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4563 - auc: 0.8088 - loss: 0.4065 - val_accuracy: 0.4404 - val_auc: 0.8267 - val_loss: 0.3969 - learning_rate: 1.0000e-06
+Epoch 91/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4540 - auc: 0.8102 - loss: 0.4049 - val_accuracy: 0.4435 - val_auc: 0.8268 - val_loss: 0.3946 - learning_rate: 1.0000e-06
+Epoch 92/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 212s 349ms/step - accuracy: 0.4625 - auc: 0.8128 - loss: 0.4031 - val_accuracy: 0.4498 - val_auc: 0.8265 - val_loss: 0.3951 - learning_rate: 1.0000e-06
+Epoch 93/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4505 - auc: 0.8098 - loss: 0.4063 - val_accuracy: 0.4560 - val_auc: 0.8270 - val_loss: 0.3946 - learning_rate: 1.0000e-06
+Epoch 94/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 212s 349ms/step - accuracy: 0.4551 - auc: 0.8090 - loss: 0.4053 - val_accuracy: 0.4519 - val_auc: 0.8280 - val_loss: 0.3946 - learning_rate: 1.0000e-06
+Epoch 95/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 348ms/step - accuracy: 0.4605 - auc: 0.8143 - loss: 0.4034 - val_accuracy: 0.4440 - val_auc: 0.8280 - val_loss: 0.3945 - learning_rate: 1.0000e-06
+Epoch 96/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 348ms/step - accuracy: 0.4514 - auc: 0.8132 - loss: 0.4048 - val_accuracy: 0.4519 - val_auc: 0.8271 - val_loss: 0.3945 - learning_rate: 1.0000e-06
+Epoch 97/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4608 - auc: 0.8127 - loss: 0.4031 - val_accuracy: 0.4444 - val_auc: 0.8269 - val_loss: 0.3946 - learning_rate: 1.0000e-06
+Epoch 98/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4568 - auc: 0.8130 - loss: 0.4036 - val_accuracy: 0.4500 - val_auc: 0.8280 - val_loss: 0.3946 - learning_rate: 1.0000e-06
+Epoch 99/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4577 - auc: 0.8123 - loss: 0.4036 - val_accuracy: 0.4563 - val_auc: 0.8276 - val_loss: 0.3945 - learning_rate: 1.0000e-06
+Epoch 100/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4523 - auc: 0.8133 - loss: 0.4031 - val_accuracy: 0.4575 - val_auc: 0.8276 - val_loss: 0.3943 - learning_rate: 1.0000e-06
+Epoch 101/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4570 - auc: 0.8121 - loss: 0.4034 - val_accuracy: 0.4512 - val_auc: 0.8276 - val_loss: 0.3944 - learning_rate: 1.0000e-06
+Epoch 102/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4562 - auc: 0.8107 - loss: 0.4038 - val_accuracy: 0.4521 - val_auc: 0.8265 - val_loss: 0.3956 - learning_rate: 1.0000e-06
+Epoch 103/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4501 - auc: 0.8110 - loss: 0.4044 - val_accuracy: 0.4531 - val_auc: 0.8278 - val_loss: 0.3944 - learning_rate: 1.0000e-06
+Epoch 104/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4520 - auc: 0.8111 - loss: 0.4058 - val_accuracy: 0.4498 - val_auc: 0.8277 - val_loss: 0.3941 - learning_rate: 1.0000e-06
+Epoch 105/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4587 - auc: 0.8092 - loss: 0.4065 - val_accuracy: 0.4473 - val_auc: 0.8271 - val_loss: 0.3953 - learning_rate: 1.0000e-06
+Epoch 106/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 348ms/step - accuracy: 0.4567 - auc: 0.8149 - loss: 0.4026 - val_accuracy: 0.4535 - val_auc: 0.8274 - val_loss: 0.3944 - learning_rate: 1.0000e-06
+Epoch 107/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 212s 349ms/step - accuracy: 0.4600 - auc: 0.8125 - loss: 0.4031 - val_accuracy: 0.4598 - val_auc: 0.8274 - val_loss: 0.3942 - learning_rate: 1.0000e-06
+Epoch 108/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 214s 353ms/step - accuracy: 0.4543 - auc: 0.8090 - loss: 0.4063 - val_accuracy: 0.4504 - val_auc: 0.8273 - val_loss: 0.3941 - learning_rate: 1.0000e-06
+Epoch 109/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4515 - auc: 0.8134 - loss: 0.4038 - val_accuracy: 0.4506 - val_auc: 0.8278 - val_loss: 0.3940 - learning_rate: 1.0000e-06
+Epoch 110/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4609 - auc: 0.8154 - loss: 0.4027 - val_accuracy: 0.4567 - val_auc: 0.8281 - val_loss: 0.3940 - learning_rate: 1.0000e-06
+Epoch 111/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 348ms/step - accuracy: 0.4546 - auc: 0.8093 - loss: 0.4055 - val_accuracy: 0.4440 - val_auc: 0.8273 - val_loss: 0.3947 - learning_rate: 1.0000e-06
+Epoch 112/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 212s 349ms/step - accuracy: 0.4536 - auc: 0.8092 - loss: 0.4034 - val_accuracy: 0.4435 - val_auc: 0.8274 - val_loss: 0.3942 - learning_rate: 1.0000e-06
+Epoch 113/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4551 - auc: 0.8139 - loss: 0.4048 - val_accuracy: 0.4512 - val_auc: 0.8270 - val_loss: 0.3940 - learning_rate: 1.0000e-06
+Epoch 114/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4527 - auc: 0.8105 - loss: 0.4042 - val_accuracy: 0.4410 - val_auc: 0.8271 - val_loss: 0.3948 - learning_rate: 1.0000e-06
+Epoch 115/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4549 - auc: 0.8104 - loss: 0.4053 - val_accuracy: 0.4629 - val_auc: 0.8279 - val_loss: 0.3938 - learning_rate: 1.0000e-06
+Epoch 116/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 211s 347ms/step - accuracy: 0.4600 - auc: 0.8150 - loss: 0.4025 - val_accuracy: 0.4425 - val_auc: 0.8277 - val_loss: 0.3946 - learning_rate: 1.0000e-06
+Epoch 117/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 347ms/step - accuracy: 0.4592 - auc: 0.8130 - loss: 0.4037 - val_accuracy: 0.4515 - val_auc: 0.8284 - val_loss: 0.3938 - learning_rate: 1.0000e-06
+Epoch 118/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 206s 340ms/step - accuracy: 0.4632 - auc: 0.8136 - loss: 0.4038 - val_accuracy: 0.4452 - val_auc: 0.8274 - val_loss: 0.3946 - learning_rate: 1.0000e-06
+Epoch 119/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 205s 338ms/step - accuracy: 0.4627 - auc: 0.8105 - loss: 0.4046 - val_accuracy: 0.4544 - val_auc: 0.8283 - val_loss: 0.3938 - learning_rate: 1.0000e-06
+Epoch 120/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 206s 339ms/step - accuracy: 0.4566 - auc: 0.8122 - loss: 0.4034 - val_accuracy: 0.4544 - val_auc: 0.8278 - val_loss: 0.3940 - learning_rate: 1.0000e-06
+Epoch 121/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 361s 599ms/step - accuracy: 0.4541 - auc: 0.8126 - loss: 0.4050 - val_accuracy: 0.4677 - val_auc: 0.8285 - val_loss: 0.3940 - learning_rate: 1.0000e-06
+Epoch 122/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 208s 342ms/step - accuracy: 0.4590 - auc: 0.8152 - loss: 0.4016 - val_accuracy: 0.4421 - val_auc: 0.8278 - val_loss: 0.3940 - learning_rate: 1.0000e-06
+Epoch 123/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 206s 340ms/step - accuracy: 0.4580 - auc: 0.8176 - loss: 0.4012 - val_accuracy: 0.4608 - val_auc: 0.8279 - val_loss: 0.3944 - learning_rate: 1.0000e-06
+Epoch 124/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 207s 341ms/step - accuracy: 0.4532 - auc: 0.8125 - loss: 0.4032 - val_accuracy: 0.4500 - val_auc: 0.8277 - val_loss: 0.3941 - learning_rate: 1.0000e-06
+Epoch 125/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 210s 346ms/step - accuracy: 0.4558 - auc: 0.8153 - loss: 0.4029 - val_accuracy: 0.4548 - val_auc: 0.8282 - val_loss: 0.3938 - learning_rate: 1.0000e-06
+Epoch 126/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 213s 350ms/step - accuracy: 0.4554 - auc: 0.8125 - loss: 0.4033 - val_accuracy: 0.4512 - val_auc: 0.8280 - val_loss: 0.3934 - learning_rate: 1.0000e-06
+Epoch 127/200
+2025-05-03 13:55:05.596716: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:450] ShuffleDatasetV3:4: Filling up shuffle buffer (this may take a while): 1010 of 2000
+2025-05-03 13:55:06.916999: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:480] Shuffle buffer filled.
+600/600 ━━━━━━━━━━━━━━━━━━━━ 2030s 2s/step - accuracy: 0.4500 - auc: 0.8148 - loss: 0.4022 - val_accuracy: 0.4529 - val_auc: 0.8275 - val_loss: 0.3940 - learning_rate: 1.0000e-06
+Epoch 128/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 1251s 2s/step - accuracy: 0.4521 - auc: 0.8130 - loss: 0.4036 - val_accuracy: 0.4535 - val_auc: 0.8280 - val_loss: 0.3935 - learning_rate: 1.0000e-06
+Epoch 129/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 1241s 2s/step - accuracy: 0.4601 - auc: 0.8138 - loss: 0.4010 - val_accuracy: 0.4531 - val_auc: 0.8281 - val_loss: 0.3937 - learning_rate: 1.0000e-06
+Epoch 130/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 2108s 4s/step - accuracy: 0.4549 - auc: 0.8130 - loss: 0.4027 - val_accuracy: 0.4608 - val_auc: 0.8279 - val_loss: 0.3941 - learning_rate: 1.0000e-06
+Epoch 131/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 249s 411ms/step - accuracy: 0.4574 - auc: 0.8116 - loss: 0.4039 - val_accuracy: 0.4471 - val_auc: 0.8279 - val_loss: 0.3934 - learning_rate: 1.0000e-06
+Epoch 132/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 324s 525ms/step - accuracy: 0.4573 - auc: 0.8096 - loss: 0.4041 - val_accuracy: 0.4467 - val_auc: 0.8279 - val_loss: 0.3937 - learning_rate: 1.0000e-06
+Epoch 133/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 369s 610ms/step - accuracy: 0.4606 - auc: 0.8149 - loss: 0.4019 - val_accuracy: 0.4508 - val_auc: 0.8277 - val_loss: 0.3935 - learning_rate: 1.0000e-06
+Epoch 134/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 399s 660ms/step - accuracy: 0.4550 - auc: 0.8116 - loss: 0.4039 - val_accuracy: 0.4487 - val_auc: 0.8280 - val_loss: 0.3934 - learning_rate: 1.0000e-06
+Epoch 135/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 206s 339ms/step - accuracy: 0.4535 - auc: 0.8118 - loss: 0.4023 - val_accuracy: 0.4579 - val_auc: 0.8288 - val_loss: 0.3940 - learning_rate: 1.0000e-06
+Epoch 136/200
+600/600 ━━━━━━━━━━━━━━━━━━━━ 219s 360ms/step - accuracy: 0.4585 - auc: 0.8124 - loss: 0.4042 - val_accuracy: 0.4542 - val_auc: 0.8278 - val_loss: 0.3935 - learning_rate: 1.0000e-06
+Epoch 136: early stopping
+Restoring model weights from the end of the best epoch: 126.
+--- Training Finished ---
+
+--- Evaluating Model ---
+188/188 ━━━━━━━━━━━━━━━━━━━━ 14s 72ms/step - accuracy: 0.4525 - auc: 0.8300 - loss: 0.3877
+Test Loss: 0.3875, Test Accuracy: 0.4578, Test AUC: 0.8286
+
+--- Generating Classification Report ---
+188/188 ━━━━━━━━━━━━━━━━━━━━ 13s 67ms/step
+2025-05-03 16:00:23.974805: W tensorflow/core/framework/local_rendezvous.cc:404] Local rendezvous is aborting with status: OUT_OF_RANGE: End of sequence
+              precision    recall  f1-score   support
+
+         Man       0.59      0.46      0.52      2132
+         Car       0.91      0.86      0.89      1784
+       Wheel       0.73      0.67      0.70      1308
+       Woman       0.59      0.31      0.41      1587
+        Tree       0.68      0.33      0.45       567
+    Clothing       0.61      0.60      0.61      2565
+      Mammal       0.56      0.17      0.26      1515
+   Furniture       0.00      0.00      0.00       113
+
+   micro avg       0.68      0.51      0.58     11571
+   macro avg       0.58      0.43      0.48     11571
+weighted avg       0.65      0.51      0.56     11571
+ samples avg       0.53      0.52      0.49     11571
+
+Model saved to multilabel_cnn_tfdata_7_6.keras
+1/1 ━━━━━━━━━━━━━━━━━━━━ 0s 175ms/step
+
+--- Predictions for Single Image ---
+(Using threshold: 0.5)
+Scores:
+- Man             : 0.5133
+- Car             : 0.0037
+- Wheel           : 0.0089
+- Woman           : 0.6106
+- Tree            : 0.0037
+- Clothing        : 0.6194
+- Mammal          : 0.2335
+- Furniture       : 0.0329
+
+Detected Classes above threshold:
+- Man (0.51)
+- Woman (0.61)
+- Clothing (0.62)
+
+Detected Classes in Test Image:
+- Man (0.51)
+- Woman (0.61)
+- Clothing (0.62)
+
+--- Script Finished ---
+
+Process finished with exit code 0
