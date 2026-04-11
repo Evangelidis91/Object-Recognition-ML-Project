@@ -72,7 +72,7 @@ def predict_image_multilabel(model_path, image_path, class_names, image_size=(20
 
 if __name__ == "__main__":
     MODEL_PATH = "multilabel_cnn_tfdata_7_6.keras"
-    IMAGE_PATH = "/Users/konstantinosevangelidis/fiftyone/open-images-v7/test/data/0aecdda329ce4a4f.jpg"
+    IMAGE_PATH = "./data/open-images-v7/test/data/sample.jpg"  # Set this to your test image path
     # For model <= 7.5
     #CLASSES = ['Man', 'Car', 'Wheel', 'Woman', 'Tree']
     # For model >= 7.6
