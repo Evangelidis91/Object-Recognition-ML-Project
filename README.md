@@ -31,13 +31,36 @@ The model recognizes the following 8 object classes:
 
 A sequential CNN with 4 convolutional blocks followed by dense layers:
 
-- **4 Conv2D blocks**: 32 → 64 → 128 → 256 filters, each with BatchNormalization, ReLU activation, and MaxPooling
-- **Global Average Pooling** to reduce spatial dimensions
-- **2 Dense layers** (256, 128 units) with BatchNormalization and Dropout (0.5, 0.3)
-- **Output layer**: 8 units with sigmoid activation (multi-label classification)
-- **Regularization**: L2 regularization, Dropout, EarlyStopping, ReduceLROnPlateau
+```
+Input (300x300x3)
+    |
+    v
+[Conv2D 32] -> BatchNorm -> ReLU -> MaxPool
+    |
+    v
+[Conv2D 64] -> BatchNorm -> ReLU -> MaxPool
+    |
+    v
+[Conv2D 128] -> BatchNorm -> ReLU -> MaxPool
+    |
+    v
+[Conv2D 256] -> BatchNorm -> ReLU -> MaxPool
+    |
+    v
+Global Average Pooling
+    |
+    v
+Dense 256 -> BatchNorm -> Dropout (0.5)
+    |
+    v
+Dense 128 -> BatchNorm -> Dropout (0.3)
+    |
+    v
+Dense 8 (sigmoid) -> Multi-label output
+```
 
-**Input size**: 300x300 RGB images
+- **Regularization**: L2 weight decay (1e-4), Dropout, EarlyStopping, ReduceLROnPlateau
+- All convolutional layers use `same` padding and L2 regularization
 
 ## Requirements
 
@@ -131,3 +154,36 @@ Evaluated on the held-out test set (6,000 images):
 - **Furniture** has zero performance due to very low support (113 samples) — insufficient training data
 - The model achieves a strong **AUC of 0.83**, indicating good ranking ability across classes despite moderate accuracy
 - Recall is generally lower than precision, suggesting the model is conservative in its predictions
+
+### Example Prediction
+
+Running inference on a single test image:
+
+```
+--- Predictions for Single Image ---
+(Using threshold: 0.5)
+Scores:
+- Man             : 0.5133
+- Car             : 0.0037
+- Wheel           : 0.0089
+- Woman           : 0.6106
+- Tree            : 0.0037
+- Clothing        : 0.6194
+- Mammal          : 0.2335
+- Furniture       : 0.0329
+
+Detected Classes above threshold:
+- Man (0.51)
+- Woman (0.61)
+- Clothing (0.62)
+```
+
+The model correctly identifies a person scene — detecting Man, Woman, and Clothing with reasonable confidence while keeping unrelated classes (Car, Wheel, Tree) near zero.
+
+## Limitations & Future Work
+
+- **Class imbalance**: Furniture had only 113 test samples vs. 2,565 for Clothing. Techniques like oversampling, class weighting, or focal loss could help underrepresented classes.
+- **Custom CNN vs. transfer learning**: The model is built from scratch as a learning exercise. Using a pre-trained backbone (e.g., ResNet, EfficientNet) would likely improve performance significantly.
+- **Low recall on some classes**: Woman (0.31), Tree (0.33), and Mammal (0.17) suffer from low recall. Threshold tuning per class or additional data augmentation could improve detection rates.
+- **Dataset scale**: Training on 30,000 images is relatively small for 8-class multi-label classification. Scaling to 100K+ samples would likely improve generalization.
+- **No visual explainability**: Adding Grad-CAM or similar attention visualization would help interpret what regions the model focuses on for each class.
