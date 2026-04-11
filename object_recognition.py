@@ -340,8 +340,9 @@ def predict_multiple_classes(model, image_path, classes, threshold=0.5):
 # ==================
 if __name__ == "__main__":
     # --- Configuration ---
-    DATASET_DIR = "/Users/konstantinosevangelidis/fiftyone/open-images-v7"
-    TEST_IMAGE_PATH = "/Users/konstantinosevangelidis/fiftyone/open-images-v7/train/data/00a0e0767835954f.jpg"
+    # Set these paths to match your local environment before running
+    DATASET_DIR = "./data/open-images-v7"  # Path to Open Images V7 dataset
+    TEST_IMAGE_PATH = "./data/open-images-v7/test/data/sample.jpg"  # Path to a test image
     MAX_SAMPLES = 10000  # Adjust number of samples to load per split
     MODEL_SAVE_PATH = "multilabel_cnn_tfdata_7_6.keras"
     # --- End Configuration ---

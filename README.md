@@ -21,6 +21,7 @@ The model recognizes the following 8 object classes:
 ├── OpenImagesDatasetPreparation.py    # Dataset download & analysis using FiftyOne
 ├── model_test.py                      # Inference script for testing the trained model on new images
 ├── multilabel_cnn_tfdata_7_6.keras    # Pre-trained model weights
+├── requirements.txt                   # Python dependencies
 └── README.md
 ```
 
@@ -47,7 +48,7 @@ A sequential CNN with 4 convolutional blocks followed by dense layers:
 Install dependencies:
 
 ```bash
-pip install tensorflow numpy scikit-learn fiftyone
+pip install -r requirements.txt
 ```
 
 ## Usage
