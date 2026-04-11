@@ -15,6 +15,16 @@ The model recognizes the following 8 object classes:
 | Tree | Clothing |
 | Mammal | Furniture |
 
+## Tech Stack
+
+| Technology | Role |
+|------------|------|
+| **TensorFlow / Keras** | Model building, training, and inference |
+| **tf.data API** | Efficient input pipeline with parallel loading, batching, and prefetching |
+| **FiftyOne** | Open Images V7 dataset download and management |
+| **scikit-learn** | Data splitting (`train_test_split`) and evaluation (`classification_report`) |
+| **NumPy** | Multi-hot label encoding and array operations |
+
 ## Project Structure
 
 ```
