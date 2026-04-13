@@ -184,13 +184,18 @@ def create_tf_dataset(image_paths, labels, batch_size, augment=False):
     # Run the 'load_and_preprocess' function on every item in the dataset.
     # num_parallel_calls=tf.data.AUTOTUNE helps TensorFlow do this faster using computer resources smartly.
     ds = ds.map(load_and_preprocess, num_parallel_calls=tf.data.AUTOTUNE)
+
     if augment:
         # Decide how much data to load for shuffling.
         buffer_size = min(len(image_paths), 2000)
         ds = ds.shuffle(buffer_size=buffer_size)
+    else:
+        # Cache val/test datasets in memory to avoid re-reading images from disk every epoch.
+        # Not applied to training since augmentation produces different results each epoch.
+        ds = ds.cache()
 
-    # Group the data into batches.
-    ds = ds.batch(batch_size)
+    # drop_remainder=True ensures uniform batch sizes, avoiding shape mismatches during evaluation.
+    ds = ds.batch(batch_size, drop_remainder=True)
     ds = ds.prefetch(tf.data.AUTOTUNE)
     return ds
 
