@@ -27,8 +27,9 @@ def predict_image_multilabel(model_path, image_path, class_names, image_size=(20
         # --- Load and Preprocess Image ---
         img = tf.io.read_file(image_path)
 
-        # Decode image robustly
-        img = tf.io.decode_image(img, channels=3, expand_animations=False, dtype=tf.float32)
+        # Decode into uint8 then cast to float32 (keeps 0-255 range for Rescaling layer in model)
+        img = tf.io.decode_image(img, channels=3, expand_animations=False)
+        img = tf.cast(img, tf.float32)
         img.set_shape([None, None, 3])
         img = tf.image.resize(img, image_size)
         img.set_shape([*image_size, 3])
@@ -36,7 +37,7 @@ def predict_image_multilabel(model_path, image_path, class_names, image_size=(20
 
         # --- Predict ---
         print("Running prediction...")
-        preds = model.predict(img)[0]
+        preds = model.predict(img, verbose=0)[0]
 
         # --- Process Results ---
         detected_classes_list = []
