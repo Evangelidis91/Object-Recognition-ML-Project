@@ -480,9 +480,8 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Could not generate classification report: {e}")
 
-    # Save the model
-    model.save(MODEL_SAVE_PATH)
-    print(f"Model saved to {MODEL_SAVE_PATH}")
+    # ModelCheckpoint already saved the best model by val_auc during training.
+    # No need to save again here — that would overwrite the best with the last epoch.
 
     # Predict on a single image
     if os.path.exists(TEST_IMAGE_PATH):
