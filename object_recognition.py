@@ -184,13 +184,18 @@ def create_tf_dataset(image_paths, labels, batch_size, augment=False):
     # Run the 'load_and_preprocess' function on every item in the dataset.
     # num_parallel_calls=tf.data.AUTOTUNE helps TensorFlow do this faster using computer resources smartly.
     ds = ds.map(load_and_preprocess, num_parallel_calls=tf.data.AUTOTUNE)
+
     if augment:
         # Decide how much data to load for shuffling.
         buffer_size = min(len(image_paths), 2000)
         ds = ds.shuffle(buffer_size=buffer_size)
+    else:
+        # Cache val/test datasets in memory to avoid re-reading images from disk every epoch.
+        # Not applied to training since augmentation produces different results each epoch.
+        ds = ds.cache()
 
-    # Group the data into batches.
-    ds = ds.batch(batch_size)
+    # drop_remainder=True ensures uniform batch sizes, avoiding shape mismatches during evaluation.
+    ds = ds.batch(batch_size, drop_remainder=True)
     ds = ds.prefetch(tf.data.AUTOTUNE)
     return ds
 
@@ -359,20 +364,16 @@ if __name__ == "__main__":
 
     # --- Configuration ---
     # Set these paths to match your local environment before running
+    #DATASET_DIR = "/Users/konstantinosevangelidis/fiftyone/open-images-v7"
+    #TEST_IMAGE_PATH = "/Users/konstantinosevangelidis/fiftyone/open-images-v7/train/data/00a0e0767835954f.jpg"
     DATASET_DIR = "./data/open-images-v7"  # Path to Open Images V7 dataset
-    TEST_IMAGE_PATH = "./data/open-images-v7/test/data/sample.jpg"  # Path to a test image
+    TEST_IMAGE_PATH = "/Users/konstantinosevangelidis/fiftyone/open-images-v7/test/data/0a70f739f5470c48.jpg"  # Path to a test image
     MAX_SAMPLES = 10000  # Adjust number of samples to load per split
-    MODEL_SAVE_PATH = "multilabel_cnn_tfdata_7_6.keras"
+    MODEL_SAVE_PATH = "multilabel_cnn_tfdata_7_7.keras"
     # --- End Configuration ---
 
-    # --- Basic Checks ---
-    if not os.path.isdir(DATASET_DIR):
-        print(
-            "=" * 60 + f"\n!!! WARNING: DATASET_DIR '{DATASET_DIR}' does not exist! Cannot run. !!!\n" + "=" * 60)
-        exit()
-
     # --- Load Dataset Information ---
-    # Download/load the dataset meta-info
+    # FiftyOne handles downloading and creating the dataset directory.
     try:
         # Create the dataset tool object
         dataset_prep = OpenImagesDatasetPreparation(DATASET_DIR, CLASSES)
@@ -447,9 +448,9 @@ if __name__ == "__main__":
     # Define callbacks — monitor val_auc (more meaningful for imbalanced multi-label)
     callbacks_list = [
         # Stop training early if the model stops improving on the validation set.
-        EarlyStopping(monitor='val_auc', mode='max', patience=10, restore_best_weights=True, verbose=1),
+        EarlyStopping(monitor='val_auc', mode='max', patience=20, restore_best_weights=True, verbose=1),
         # Reduce the learning rate if the model gets stuck.
-        ReduceLROnPlateau(monitor='val_auc', mode='max', factor=0.2, patience=5, min_lr=1e-6, verbose=1),
+        ReduceLROnPlateau(monitor='val_auc', mode='max', factor=0.2, patience=10, min_lr=1e-6, verbose=1),
         # Save the best model to disk so training progress isn't lost if interrupted.
         ModelCheckpoint(MODEL_SAVE_PATH, monitor='val_auc', mode='max', save_best_only=True, verbose=1)
     ]
