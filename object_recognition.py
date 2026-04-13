@@ -2,9 +2,8 @@ import os
 import numpy as np
 import tensorflow as tf
 from keras import layers, models, regularizers, optimizers, Input
-from keras.src import metrics
-from keras.src.callbacks import EarlyStopping, ReduceLROnPlateau
-from sklearn.model_selection import train_test_split
+from keras import metrics
+from keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
 from sklearn.metrics import classification_report
 
 # --- Placeholder for Dataset Preparation ---
@@ -41,9 +40,9 @@ NUM_CLASSES = len(CLASSES)  # The total number of classes based on the CLASSES l
 # --- Data Extraction: Multi-hot Labels ---
 def extract_paths_and_multihot_labels(datasets, classes):
     """
-    Finds picture files and creates labels for them.
+    Finds picture files and creates labels for them, preserving original splits.
 
-    This function looks through the picture information.
+    This function looks through the picture information per split.
     It only keeps pictures that show at least one of the items in CLASSES
     variable list and makes sure the picture file exists.
     For each picture, it creates a multi-hot label that includes info if the
@@ -53,26 +52,29 @@ def extract_paths_and_multihot_labels(datasets, classes):
         datasets: Dictionary of fiftyone dataset splits.
         classes: List of target class names.
     Returns:
-        image_paths: list of valid filepaths.
-        labels_array: list of labels of the valid pictures
+        split_data: dict mapping split name to (image_paths, labels_array).
     """
     print("\nExtracting file paths and multi-hot labels...")
-    image_paths = []  # An empty list to hold the file paths we find.
-    labels_list = []  # An empty list to hold the labels we create.
-    num_classes_local = len(classes)  # Use local variable for clarity
+    num_classes_local = len(classes)
+    class_to_idx = {cls: i for i, cls in enumerate(classes)}
 
-    # Check if datasets is empty or None, return empty lists
+    # Check if datasets is empty or None
     if not datasets or all(v is None for v in datasets.values()):
         print("Warning: Dataset dictionary is empty or invalid. Cannot extract data.")
-        return [], np.array([], dtype=np.float32)  # returns empty lists
+        return {}
+
+    split_data = {}
 
     # Look at each of the set('train', 'validation', 'test')
     for split, dataset in datasets.items():
         # Skip if set is empty
-        if dataset is None: print(f"Skipping empty split: {split}"); continue
+        if dataset is None:
+            print(f"Skipping empty split: {split}")
+            continue
 
         print(f"Extracting from {split}...")
-        split_count = 0  # Counter for valid images
+        image_paths = []
+        labels_list = []
 
         # Go through each picture's information in the set.
         # Use iter_samples for potential memory efficiency with large fiftyone datasets
@@ -93,9 +95,9 @@ def extract_paths_and_multihot_labels(datasets, classes):
 
                 # Look each of the objects found in the picture.
                 for detection in sample.ground_truth.detections:
-                    if hasattr(detection, 'label') and detection.label in classes:
-                        # index class position
-                        idx = classes.index(detection.label)
+                    if hasattr(detection, 'label') and detection.label in class_to_idx:
+                        # O(1) lookup instead of classes.index()
+                        idx = class_to_idx[detection.label]
                         # 0 to 1 for this index position
                         label_vector[idx] = 1
                         # Change the flag
@@ -105,19 +107,19 @@ def extract_paths_and_multihot_labels(datasets, classes):
                 if has_target_class and os.path.exists(sample.filepath):
                     image_paths.append(sample.filepath)
                     labels_list.append(label_vector)
-                    split_count += 1
             # Handle error
             except Exception as e:
                 print(f"Error processing sample {sample.id}: {e}")
-        print(f"Extracted {split_count} valid samples from {split}.")
 
-    # Check if we found any picture or return empty lists
-    if not image_paths: print("Warning: No valid image paths extracted."); return [], np.array([])
+        print(f"Extracted {len(image_paths)} valid samples from {split}.")
 
-    # Convert list of lists/arrays to a single NumPy array (float32 for TF)
-    labels_array = np.array(labels_list, dtype=np.float32)
-    print(f"Total extracted samples: {len(image_paths)}")
-    return image_paths, labels_array
+        if image_paths:
+            labels_array = np.array(labels_list, dtype=np.float32)
+            split_data[split] = (image_paths, labels_array)
+
+    total = sum(len(paths) for paths, _ in split_data.values())
+    print(f"Total extracted samples: {total}")
+    return split_data
 
 
 # --- Prepare Data for TensorFlow ---
@@ -158,27 +160,25 @@ def create_tf_dataset(image_paths, labels, batch_size, augment=False):
 
     # --- Function to Load and Prepare One Picture ---
     # This function will be applied to every (path, label) pair.
+    # Note: try/except does NOT work inside tf.data.map() (graph mode).
+    # If an image fails to decode, TensorFlow will raise an op-level error.
     def load_and_preprocess(path, label):
-        try:
-            # Read the picture file.
-            img = tf.io.read_file(path)
-            # Decode with error handling
-            img = tf.io.decode_image(img, channels=3, expand_animations=False, dtype=tf.float32)
-            img.set_shape([None, None, 3])  # Set shape after decoding
-            img = tf.image.resize(img, IMAGE_SIZE)  # Resize the image
-            img.set_shape([*IMAGE_SIZE, 3])  # Set shape after resizing
+        # Read the picture file.
+        img = tf.io.read_file(path)
+        # Decode into uint8 then cast to float32 (keeps 0-255 range for Rescaling layer in model)
+        img = tf.io.decode_image(img, channels=3, expand_animations=False)
+        img = tf.cast(img, tf.float32)
+        img.set_shape([None, None, 3])  # Set shape after decoding
+        img = tf.image.resize(img, IMAGE_SIZE)  # Resize the image
+        img.set_shape([*IMAGE_SIZE, 3])  # Set shape after resizing
 
-            # Apply basic augmentation if specified
-            if augment:
-                img = tf.image.random_flip_left_right(img)
-                img = tf.image.random_brightness(img, max_delta=0.1)  # Reduced delta
-                # Add more augmentation here if needed
-                # img = tf.image.random_contrast(img, lower=0.8, upper=1.2)
-            return img, label
-        # handle errors
-        except Exception as e:
-            tf.print(f"Error processing image {path}: {e}")
-            return tf.zeros([*IMAGE_SIZE, 3]), label
+        # Apply basic augmentation if specified
+        if augment:
+            img = tf.image.random_flip_left_right(img)
+            img = tf.image.random_brightness(img, max_delta=0.1)  # Reduced delta
+            # Add more augmentation here if needed
+            # img = tf.image.random_contrast(img, lower=0.8, upper=1.2)
+        return img, label
 
     # --- Apply Steps to the Dataset ---
     # Run the 'load_and_preprocess' function on every item in the dataset.
@@ -220,6 +220,9 @@ def build_cnn_model(input_shape, num_classes):
         # Tell the model what size the input pictures will be.
         Input(shape=input_shape),
 
+        # Normalize pixel values from [0, 255] to [0, 1] so the model is self-contained.
+        layers.Rescaling(1./255),
+
         # --- Block 1: Find basic patterns ---
         layers.Conv2D(32, (3, 3), padding='same', kernel_regularizer=regularizers.l2(l2_reg)),
         layers.BatchNormalization(),
@@ -246,12 +249,15 @@ def build_cnn_model(input_shape, num_classes):
 
         layers.GlobalAveragePooling2D(),
 
-        layers.Dense(256, activation='relu', kernel_regularizer=regularizers.l2(l2_reg)),
+        # Dense blocks follow same pattern as conv blocks: Linear→BN→ReLU
+        layers.Dense(256, kernel_regularizer=regularizers.l2(l2_reg)),
         layers.BatchNormalization(),
+        layers.Activation('relu'),
         layers.Dropout(0.5),
 
-        layers.Dense(128, activation='relu', kernel_regularizer=regularizers.l2(l2_reg)),
+        layers.Dense(128, kernel_regularizer=regularizers.l2(l2_reg)),
         layers.BatchNormalization(),
+        layers.Activation('relu'),
         layers.Dropout(0.3),
 
         layers.Dense(num_classes, activation='sigmoid')  # Sigmoid for multi-label
@@ -292,8 +298,9 @@ def predict_multiple_classes(model, image_path, classes, threshold=0.5):
         # --- Load and Prepare the Picture ---
         # Read image file
         img = tf.io.read_file(image_path)
-        # turn in into pixel data
-        img = tf.io.decode_image(img, channels=3, expand_animations=False, dtype=tf.float32)
+        # turn it into pixel data (keep 0-255 range, Rescaling layer in model normalizes)
+        img = tf.io.decode_image(img, channels=3, expand_animations=False)
+        img = tf.cast(img, tf.float32)
         img.set_shape([None, None, 3])
         # Resize it to the required size
         img = tf.image.resize(img, IMAGE_SIZE)
@@ -307,7 +314,7 @@ def predict_multiple_classes(model, image_path, classes, threshold=0.5):
         """
 
         # Predict and get first (only) batch item
-        preds = model.predict(img)[0]
+        preds = model.predict(img, verbose=0)[0]
 
         # Empty list to store classes we detect.
         detected = []
@@ -330,15 +337,21 @@ def predict_multiple_classes(model, image_path, classes, threshold=0.5):
 
     # --- Handle Errors ---
     except FileNotFoundError:
-        print(f"Error: Image not found at {image_path}"); return []
+        print(f"Error: Image not found at {image_path}")
+        return []
     except Exception as e:
-        print(f"Error predicting image {image_path}: {e}"); return []
+        print(f"Error predicting image {image_path}: {e}")
+        return []
 
 
 # ==================
 # Main Execution
 # ==================
 if __name__ == "__main__":
+    # --- Reproducibility ---
+    tf.random.set_seed(42)
+    np.random.seed(42)
+
     # --- Configuration ---
     # Set these paths to match your local environment before running
     DATASET_DIR = "./data/open-images-v7"  # Path to Open Images V7 dataset
@@ -348,10 +361,9 @@ if __name__ == "__main__":
     # --- End Configuration ---
 
     # --- Basic Checks ---
-    is_placeholder = "/path/to/" in DATASET_DIR
-    if is_placeholder:
+    if not os.path.isdir(DATASET_DIR):
         print(
-            "=" * 60 + "\n!!! WARNING: You MUST change the DATASET_DIR path in the script! Cannot run. !!!\n" + "=" * 60)
+            "=" * 60 + f"\n!!! WARNING: DATASET_DIR '{DATASET_DIR}' does not exist! Cannot run. !!!\n" + "=" * 60)
         exit()
 
     # --- Load Dataset Information ---
@@ -360,9 +372,10 @@ if __name__ == "__main__":
         # Create the dataset tool object
         dataset_prep = OpenImagesDatasetPreparation(DATASET_DIR, CLASSES)
         datasets = dataset_prep.download_dataset(max_samples=MAX_SAMPLES)
-        if not datasets: raise ValueError("Dataset loading/download failed.")
+        if not datasets:
+            raise ValueError("Dataset loading/download failed.")
     except Exception as e:
-        print(f"Error initializing dataset: {e}");
+        print(f"Error initializing dataset: {e}")
         exit()
 
     # --- >>> NEW: Analyze Datasets <<< ---
@@ -391,42 +404,33 @@ if __name__ == "__main__":
     # --- >>> End of New Analysis Section <<< ---
 
     # --- Get Picture Paths and Labels ---
-    # Extract filepaths and multi-hot labels
-    image_paths, labels_array = extract_paths_and_multihot_labels(datasets, CLASSES)
-    if not image_paths: print("Error: No data extracted. Check dataset and classes."); exit()
-
-    # --- Split Data into Sets ---
-    # We need to split our data into three groups:
-    # 1. Training set: Used to teach the model. (Largest group)
-    # 2. Validation set: Used to check the model during training and tune settings.
-    # 3. Test set: Used only at the very end to see how well the trained model performs on new data.
-    indices = np.arange(len(image_paths))
-    try:
-        train_idx, test_idx = train_test_split(indices, test_size=0.2, random_state=42)
-        train_idx, val_idx = train_test_split(train_idx, test_size=0.2, random_state=42)
-    except Exception as e:
-        print(f"Error during index split: {e}");
+    # Extract filepaths and multi-hot labels, preserving original FiftyOne splits.
+    split_data = extract_paths_and_multihot_labels(datasets, CLASSES)
+    if not split_data:
+        print("Error: No data extracted. Check dataset and classes.")
         exit()
 
-    # Create path/label lists for each split
-    train_paths = [image_paths[i] for i in train_idx]
-    val_paths = [image_paths[i] for i in val_idx]
-    test_paths = [image_paths[i] for i in test_idx]
+    # --- Use Original Splits ---
+    # FiftyOne already provides train/validation/test splits — no need to re-split.
+    for required_split in ['train', 'validation', 'test']:
+        if required_split not in split_data:
+            print(f"Error: Missing '{required_split}' split in extracted data.")
+            exit()
 
-    # Get the labels corresponding to the paths.
-    train_labels = labels_array[train_idx]
-    val_labels = labels_array[val_idx]
-    test_labels = labels_array[test_idx]
+    train_paths, train_labels = split_data['train']
+    val_paths, val_labels = split_data['validation']
+    test_paths, test_labels = split_data['test']
     # Show how many pictures are in each set.
     print(f"\nSplit Sizes: Train={len(train_paths)}, Val={len(val_paths)}, Test={len(test_paths)}")
-    if not train_paths or not val_paths or not test_paths: print("Error: Empty data splits."); exit()
 
     # --- Create TensorFlow Datasets ---
     print("\nCreating TensorFlow datasets...")
     train_ds = create_tf_dataset(train_paths, train_labels, BATCH_SIZE, augment=True)
     val_ds = create_tf_dataset(val_paths, val_labels, BATCH_SIZE, augment=False)
     test_ds = create_tf_dataset(test_paths, test_labels, BATCH_SIZE, augment=False)
-    if train_ds is None or val_ds is None or test_ds is None: print("Error creating datasets."); exit()
+    if train_ds is None or val_ds is None or test_ds is None:
+        print("Error creating datasets.")
+        exit()
     print("TensorFlow datasets created.")
 
     # Build and train the model
@@ -435,12 +439,14 @@ if __name__ == "__main__":
     model.summary()
 
     print("\n--- Starting Model Training ---")
-    # Define callbacks
+    # Define callbacks — monitor val_auc (more meaningful for imbalanced multi-label)
     callbacks_list = [
         # Stop training early if the model stops improving on the validation set.
-        EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True, verbose=1),
-        # Reduce the learning rate if the model gets stuck (validation loss stops improving).
-        ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, min_lr=1e-6, verbose=1)
+        EarlyStopping(monitor='val_auc', mode='max', patience=10, restore_best_weights=True, verbose=1),
+        # Reduce the learning rate if the model gets stuck.
+        ReduceLROnPlateau(monitor='val_auc', mode='max', factor=0.2, patience=5, min_lr=1e-6, verbose=1),
+        # Save the best model to disk so training progress isn't lost if interrupted.
+        ModelCheckpoint(MODEL_SAVE_PATH, monitor='val_auc', mode='max', save_best_only=True, verbose=1)
     ]
     # Start the training process
     history = model.fit(
@@ -465,13 +471,10 @@ if __name__ == "__main__":
         report_threshold = 0.5
         y_pred = (y_pred_proba > report_threshold).astype(int)
 
-        # Need to get y_true by iterating through the test dataset again
-        y_true = []
-        for _, label_batch in test_ds:
-            y_true.extend(label_batch.numpy())
-        y_true = np.array(y_true)
+        # Use test_labels directly instead of re-iterating the dataset
+        y_true = test_labels
 
-        # Ensure shapes match before report
+        # Ensure shapes match before report (batching may pad the last batch)
         min_len = min(len(y_pred), len(y_true))
         print(classification_report(y_true[:min_len], y_pred[:min_len], target_names=CLASSES, zero_division=0))
     except Exception as e:
