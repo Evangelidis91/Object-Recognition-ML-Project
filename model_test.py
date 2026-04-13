@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 import os # For path checking
 
-def predict_image_multilabel(model_path, image_path, class_names, image_size=(200, 200), threshold=0.5):
+def predict_image_multilabel(model_path, image_path, class_names, image_size=(300, 300), threshold=0.5):
     """
     Loads a trained Keras model and predicts for a single image.
 
