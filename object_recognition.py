@@ -271,7 +271,12 @@ def build_cnn_model(input_shape, num_classes):
     # Get the model ready for training by telling it how to learn.
     model.compile(optimizer=optimizer,
                   loss='binary_crossentropy',
-                  metrics=['accuracy', metrics.AUC(name='auc', multi_label=True)])
+                  metrics=[
+                      metrics.BinaryAccuracy(name='binary_accuracy'),
+                      metrics.AUC(name='auc', multi_label=True),
+                      metrics.Precision(name='precision'),
+                      metrics.Recall(name='recall'),
+                  ])
     return model
 
 
@@ -459,8 +464,9 @@ if __name__ == "__main__":
 
     # Evaluate on test set
     print("\n--- Evaluating Model ---")
-    test_loss, test_acc, test_auc = model.evaluate(test_ds)
-    print(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_acc:.4f}, Test AUC: {test_auc:.4f}")
+    test_loss, test_bin_acc, test_auc, test_prec, test_rec = model.evaluate(test_ds)
+    print(f"Test Loss: {test_loss:.4f}, Binary Accuracy: {test_bin_acc:.4f}, "
+          f"AUC: {test_auc:.4f}, Precision: {test_prec:.4f}, Recall: {test_rec:.4f}")
 
     # Get predictions for classification report
     print("\n--- Generating Classification Report ---")
