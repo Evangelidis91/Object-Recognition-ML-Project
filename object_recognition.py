@@ -172,12 +172,12 @@ def create_tf_dataset(image_paths, labels, batch_size, augment=False):
         img = tf.image.resize(img, IMAGE_SIZE)  # Resize the image
         img.set_shape([*IMAGE_SIZE, 3])  # Set shape after resizing
 
-        # Apply basic augmentation if specified
+        # Apply data augmentation if specified (training only)
         if augment:
             img = tf.image.random_flip_left_right(img)
-            img = tf.image.random_brightness(img, max_delta=0.1)  # Reduced delta
-            # Add more augmentation here if needed
-            # img = tf.image.random_contrast(img, lower=0.8, upper=1.2)
+            img = tf.image.random_brightness(img, max_delta=0.1)
+            img = tf.image.random_contrast(img, lower=0.8, upper=1.2)
+            img = tf.image.random_saturation(img, lower=0.8, upper=1.2)
         return img, label
 
     # --- Apply Steps to the Dataset ---
